@@ -640,6 +640,7 @@ GameObject:
   - component: {fileID: 973120913}
   - component: {fileID: 973120917}
   - component: {fileID: 973120916}
+  - component: {fileID: 973120919}
   - component: {fileID: 973120918}
   - component: {fileID: 973120915}
   - component: {fileID: 973120914}
@@ -793,6 +794,20 @@ MonoBehaviour:
   groundCheck: {fileID: 1874835683}
   groundCheckSize: {x: 1.02, y: 0.16, z: 1.04}
   isGrounded: 0
+--- !u!114 &973120919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973120912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 421fc682db8e1e64ba7584d83800bd2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eyes: {fileID: 330585545}
+  rayCastDistance: 3
 --- !u!1 &1038776249
 GameObject:
   m_ObjectHideFlags: 0
@@ -853,7 +868,7 @@ GameObject:
   - component: {fileID: 1124072036}
   m_Layer: 0
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
