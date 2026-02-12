@@ -5,16 +5,16 @@ public class NewMonoBehaviourScript : MonoBehaviour
 {
     [SerializeField] Transform orientation;
     private Rigidbody rb;
-    private bool jumpPressed;
     private InputAction moveAction;
     private InputAction jumpAction;
 
     [Header("Movement settings")]
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float jumpForce = 5f;
-    [SerializeField] float groundDrag;
+    [SerializeField] float inAirControl = 0.6f;
     private Vector3 moveInput;
     private Vector3 moveDirection;
+    private bool jumpPressed;
 
     [Header ("Ground check")]
     [SerializeField] LayerMask ground;
@@ -46,17 +46,16 @@ public class NewMonoBehaviourScript : MonoBehaviour
     void HandleMovement()
     {
         moveDirection = orientation.forward * moveInput.y + orientation.right * moveInput.x; 
-        transform.rotation = orientation.rotation;
-        rb.AddForce(moveDirection.normalized * moveSpeed, ForceMode.Force);
-        /*if (isGrounded)
+        Vector3 targetVelocity = moveDirection.normalized * moveSpeed;
+        
+        /*if (!isGrounded)
         {
-            rb.linearDamping = groundDrag;
-        }
-        else
-        {
-            rb.linearDamping = 5f;
+            targetVelocity *= inAirControl;         // We can use this, if we wan't to reduce the speed while in air
         }*/
-        //rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
+
+        rb.linearVelocity = new Vector3(targetVelocity.x, rb.linearVelocity.y, targetVelocity.z);
+        transform.rotation = orientation.rotation;
+        //rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime); // This has been changed to just setting the velocity directly
     }
 
     void HandleJumping()
