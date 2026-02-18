@@ -5,6 +5,7 @@ public class PlayerInteract : MonoBehaviour
 {
     [SerializeField] Camera eyes;
     [SerializeField] float rayCastDistance = 3f;
+    [SerializeField] LetterSpawn letterSpawn;
     private InputAction interactAction;
 
     void Start()
@@ -19,15 +20,16 @@ public class PlayerInteract : MonoBehaviour
 
     void HandleInteract()
     {
-        if (interactAction.IsPressed())
+        if (interactAction.WasPressedThisFrame())
         {
             Debug.DrawRay(eyes.transform.position, eyes.transform.forward * rayCastDistance, Color.red);
             var ray = new Ray(eyes.transform.position, eyes.transform.forward);
             if (Physics.Raycast(ray, out RaycastHit hit, rayCastDistance))
             {
-                if (hit.collider.CompareTag("Interactable"))
+                if (hit.collider.CompareTag("LetterSpawn"))
                 {
-                    Destroy(hit.collider.gameObject);
+                    Debug.Log("Here's your letter");
+                    letterSpawn.SpawnLetter();
                 }
             }
         }
