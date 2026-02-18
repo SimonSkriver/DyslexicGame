@@ -50,7 +50,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
         
         /*if (!isGrounded)
         {
-            targetVelocity *= inAirControl;         // We can use this, if we wan't to reduce the speed while in air
+            targetVelocity *= inAirControl;         // We can use this, if we want to reduce the speed while in air
         }*/
 
         rb.linearVelocity = new Vector3(targetVelocity.x, rb.linearVelocity.y, targetVelocity.z);
