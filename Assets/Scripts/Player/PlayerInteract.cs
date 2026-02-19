@@ -1,4 +1,3 @@
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -59,12 +58,6 @@ public class PlayerInteract : MonoBehaviour
                 letterSpawn.spawnedLetter.transform.rotation = Quaternion.Euler(0f, -30.838f, letterSpawn.spawnedLetter.transform.rotation.z);
                 letterSpawn.spawnedLetter = null;
             }
-            /*{
-                if (hit.collider.CompareTag("Page"))
-                {
-                    letterSpawn.spawnedLetter.transform.position = hit.collider.transform.position;
-                }
-            }*/
         }
     }
 }
