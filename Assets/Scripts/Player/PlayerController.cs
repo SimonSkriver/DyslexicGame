@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.PlayerLoop;
 
 public class NewMonoBehaviourScript : MonoBehaviour
 {
@@ -7,11 +8,11 @@ public class NewMonoBehaviourScript : MonoBehaviour
     private Rigidbody rb;
     private InputAction moveAction;
     private InputAction jumpAction;
+    private Vector3 spawnPos;
 
     [Header("Movement settings")]
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float jumpForce = 5f;
-    [SerializeField] float inAirControl = 0.6f;
     private Vector3 moveInput;
     private Vector3 moveDirection;
     private bool jumpPressed;
@@ -29,6 +30,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
         Cursor.visible = false;
         rb = GetComponent<Rigidbody>();
         GetActions();
+        spawnPos = transform.position;
     }
 
     void Update()
@@ -47,15 +49,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         moveDirection = orientation.forward * moveInput.y + orientation.right * moveInput.x; 
         Vector3 targetVelocity = moveDirection.normalized * moveSpeed;
-        
-        /*if (!isGrounded)
-        {
-            targetVelocity *= inAirControl;         // We can use this, if we want to reduce the speed while in air
-        }*/
-
         rb.linearVelocity = new Vector3(targetVelocity.x, rb.linearVelocity.y, targetVelocity.z);
         transform.rotation = orientation.rotation;
-        //rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime); // This has been changed to just setting the velocity directly
     }
 
     void HandleJumping()
@@ -86,6 +81,14 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         moveAction = InputSystem.actions.FindAction("Move");
         jumpAction = InputSystem.actions.FindAction("Jump");
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Death")
+        {
+            rb.Move(spawnPos, Quaternion.identity);
+        }
     }
 
     private void OnDrawGizmosSelected() 
