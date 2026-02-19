@@ -5953,25 +5953,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2714695170443220122, guid: b287749986661e248a0019cba5ec5000, type: 3}
-      propertyPath: m_Mass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2714695170443220122, guid: b287749986661e248a0019cba5ec5000, type: 3}
-      propertyPath: m_ImplicitCom
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3956609600365526459, guid: b287749986661e248a0019cba5ec5000, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 4408327670578001144, guid: b287749986661e248a0019cba5ec5000, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4436082981345521136, guid: b287749986661e248a0019cba5ec5000, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.81
       objectReference: {fileID: 0}
     - target: {fileID: 5560800527802995277, guid: b287749986661e248a0019cba5ec5000, type: 3}
       propertyPath: eyes
@@ -5985,14 +5969,6 @@ PrefabInstance:
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 627112686}
-    - target: {fileID: 5713185510224746134, guid: b287749986661e248a0019cba5ec5000, type: 3}
-      propertyPath: jumpForce
-      value: 4.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5713185510224746134, guid: b287749986661e248a0019cba5ec5000, type: 3}
-      propertyPath: moveSpeed
-      value: 6
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
