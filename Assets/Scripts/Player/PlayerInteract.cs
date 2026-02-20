@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,7 @@ public class PlayerInteract : MonoBehaviour
     private InputAction interactAction;
     private InputAction placeAction;
     public bool isCarrying;
+    private bool ghostLetterIsSpawned;
     
 
     void Start()
@@ -22,6 +24,7 @@ public class PlayerInteract : MonoBehaviour
     {
         HandleInteract();
         HandlePlacing();
+        PlacementPreview();
     }
 
     void HandleInteract()
@@ -57,6 +60,22 @@ public class PlayerInteract : MonoBehaviour
                 letterSpawn.spawnedLetter.transform.position = hit.point;
                 letterSpawn.spawnedLetter.transform.rotation = Quaternion.Euler(0f, -30.838f, letterSpawn.spawnedLetter.transform.rotation.z);
                 letterSpawn.spawnedLetter = null;
+                Destroy(letterSpawn.ghostLetter);
+            }
+        }
+    }
+
+    void PlacementPreview()
+    {
+        if (isCarrying)
+        {
+            Physics.Raycast(eyes.transform.position, eyes.transform.forward, out RaycastHit hit, placementReach);
+            Debug.DrawRay(eyes.transform.position, eyes.transform.forward * pickUpReach, Color.red);
+            if (hit.collider.CompareTag("Page"))
+            {
+                letterSpawn.ghostLetter.SetActive(true);
+                letterSpawn.ghostLetter.transform.position = hit.point;
+                letterSpawn.ghostLetter.transform.rotation = Quaternion.Euler(0f, -30.838f, letterSpawn.ghostLetter.transform.rotation.z);
             }
         }
     }
