@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.PlayerLoop;
 
 public class NewMonoBehaviourScript : MonoBehaviour
 {
@@ -9,6 +8,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
     private InputAction moveAction;
     private InputAction jumpAction;
     private Vector3 spawnPos;
+    private float halfHeight;
 
     [Header("Movement settings")]
     [SerializeField] float moveSpeed = 5f;
@@ -19,8 +19,6 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     [Header ("Ground check")]
     [SerializeField] LayerMask ground;
-    [SerializeField] Transform groundCheck;
-    [SerializeField] Vector3 groundCheckSize;
     [SerializeField] bool isGrounded;
 
 
@@ -31,6 +29,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         GetActions();
         spawnPos = transform.position;
+        halfHeight = GetComponent<BoxCollider>().size.y / 2f;
     }
 
     void Update()
@@ -57,6 +56,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         if (jumpPressed && isGrounded)
         {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
         jumpPressed = false;
@@ -74,7 +74,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
     void CheckGrounded()
     {
-        isGrounded = Physics.OverlapBox(groundCheck.position, groundCheckSize, Quaternion.identity, ground).Length > 0;
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, halfHeight + 0.2f, ground);
+        Debug.DrawRay(transform.position, Vector3.down * halfHeight, Color.red);
     }
 
     void GetActions()
@@ -89,11 +90,5 @@ public class NewMonoBehaviourScript : MonoBehaviour
         {
             rb.Move(spawnPos, Quaternion.identity);
         }
-    }
-
-    private void OnDrawGizmosSelected() 
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawCube(groundCheck.position, groundCheckSize);
     }
 }

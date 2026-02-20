@@ -1,10 +1,10 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class LetterSpawn : MonoBehaviour
 {
     [SerializeField] GameObject[] letter;
     [SerializeField] Transform hands;
+    [SerializeField] Material transparentMat;
     public GameObject spawnedLetter;
     public GameObject ghostLetter;
 
@@ -16,6 +16,7 @@ public class LetterSpawn : MonoBehaviour
         ghostLetter = Instantiate(ghostLetter, hands.position, hands.rotation);
         ghostLetter.SetActive(false);
         ghostLetter.GetComponent<BoxCollider>().enabled = false;
+        ghostLetter.GetComponent<Renderer>().material = transparentMat;
         spawnedLetter.transform.SetParent(hands);
     }
 }

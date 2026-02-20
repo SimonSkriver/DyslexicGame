@@ -1,4 +1,3 @@
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,9 +9,7 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] LetterSpawn letterSpawn;
     private InputAction interactAction;
     private InputAction placeAction;
-    public bool isCarrying;
-    private bool ghostLetterIsSpawned;
-    
+    public bool isCarrying;    
 
     void Start()
     {
@@ -52,6 +49,7 @@ public class PlayerInteract : MonoBehaviour
             bool ray = Physics.Raycast(eyes.transform.position, eyes.transform.forward, out RaycastHit hit, placementReach);
             if (ray == false || !hit.collider.CompareTag("Page"))
             {
+                Destroy(letterSpawn.ghostLetter);
                 Destroy(letterSpawn.spawnedLetter);
             }
             else
@@ -69,13 +67,22 @@ public class PlayerInteract : MonoBehaviour
     {
         if (isCarrying)
         {
-            Physics.Raycast(eyes.transform.position, eyes.transform.forward, out RaycastHit hit, placementReach);
-            Debug.DrawRay(eyes.transform.position, eyes.transform.forward * pickUpReach, Color.red);
-            if (hit.collider.CompareTag("Page"))
+            if (Physics.Raycast(eyes.transform.position, eyes.transform.forward, out RaycastHit hit, placementReach))
             {
-                letterSpawn.ghostLetter.SetActive(true);
-                letterSpawn.ghostLetter.transform.position = hit.point;
-                letterSpawn.ghostLetter.transform.rotation = Quaternion.Euler(0f, -30.838f, letterSpawn.ghostLetter.transform.rotation.z);
+                if (hit.collider.CompareTag("Page"))
+                {
+                    letterSpawn.ghostLetter.SetActive(true);
+                    letterSpawn.ghostLetter.transform.position = hit.point;
+                    letterSpawn.ghostLetter.transform.rotation = Quaternion.Euler(0f, -30.838f, letterSpawn.ghostLetter.transform.rotation.z);
+                }
+                else
+                {
+                    letterSpawn.ghostLetter.SetActive(false);
+                }
+            }
+            else
+            {
+                letterSpawn.ghostLetter.SetActive(false);
             }
         }
     }
